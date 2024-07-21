@@ -7,10 +7,15 @@ public class App {
         //this resolution dimension of background image
 
         JFrame frame = new JFrame("Flappy Bird");// main window of the app
-        frame.setVisible(true); // controls visibility of the frame
+        // frame.setVisible(true); // controls visibility of the frame
         frame.setSize(boardWidth,boardHeight);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);// not resizable by user
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// when x button is clicked it will terminate the program
+
+        FlappyBird flappyBird =new FlappyBird();
+        frame.add(flappyBird);
+        frame.pack();// we want the res to be 360/640 not including the title bar pack lets us do that
+        frame.setVisible(true);//set windows visible after all the settings
     }
 }
