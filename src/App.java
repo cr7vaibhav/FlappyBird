@@ -16,6 +16,7 @@ public class App {
         FlappyBird flappyBird =new FlappyBird();
         frame.add(flappyBird);
         frame.pack();// we want the res to be 360/640 not including the title bar pack lets us do that
+        flappyBird.requestFocus();//request that this component gets the input focus
         frame.setVisible(true);//set windows visible after all the settings
     }
 }

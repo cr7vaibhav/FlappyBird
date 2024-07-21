@@ -4,7 +4,7 @@ import java.util.ArrayList;//storing all pipes in the game
 import java.util.Random;//placing pipes at random locations
 import javax.swing.*;
 
-public class FlappyBird extends JPanel implements ActionListener,KeyListener {
+public class FlappyBird extends JPanel implements ActionListener, KeyListener {
     int boardWidth = 360;
     int boardHeight = 640;
 
@@ -35,7 +35,7 @@ public class FlappyBird extends JPanel implements ActionListener,KeyListener {
 
     // game logic
     Bird bird;
-    int velocityY = -9;
+    int velocityY = 0;
     int gravity = 1;// every frame bird will slow down by one pixel
 
     Timer gameLoop;
@@ -43,6 +43,9 @@ public class FlappyBird extends JPanel implements ActionListener,KeyListener {
     FlappyBird() {
         setPreferredSize(new Dimension(boardWidth, boardHeight));
         // setBackground(Color.blue);
+
+        setFocusable(true); // make sure FlappyBird class takes in our key events
+        addKeyListener(this);//checks the 3 functions of keyListner
 
         // load images
         backgroundImg = new ImageIcon(getClass().getResource("./flappybirdbg.png")).getImage();
@@ -78,7 +81,7 @@ public class FlappyBird extends JPanel implements ActionListener,KeyListener {
 
     public void move() {// here all the x and y pos of our objects are updated
         // bird
-        velocityY += gravity;//updates the velocity after takinbg gravity into account
+        velocityY += gravity;// updates the velocity after takinbg gravity into account
         bird.y += velocityY;// updates bird pos by adding velocity to it
         bird.y = Math.max(bird.y, 0); // this caps the y pos at 0
     }
@@ -91,21 +94,23 @@ public class FlappyBird extends JPanel implements ActionListener,KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
+    public void keyPressed(KeyEvent e) {
+        //similar to keyTyped but it can be any key including f5
+        if(e.getKeyCode()==KeyEvent.VK_SPACE){
+            velocityY=-9;
+            //when space is pressed the velocityY is set to -9 every press
+        }
     }
 
+    // only using keyPressed not using the other 2 here
     @Override
-    public void keyPressed(KeyEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyPressed'");
+    public void keyTyped(KeyEvent e) {
+        // keyTyped is type on a key that has a charecter like 'A' 'a' '1' '@' not f5
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
+        // when u press on a key and u let go and key goes back up
     }
 
 }
