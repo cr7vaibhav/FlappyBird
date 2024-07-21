@@ -33,19 +33,46 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
         }
     }
 
+    // Pipes
+    int pipeX = boardWidth; // pipe will start form top and right
+    int pipeY = 0;
+    int pipeWidth = 64; // scaled by 1/6
+    int pipeHeight = 521;
+
+    class Pipe {
+        int x = pipeX;
+        int y = pipeY;
+        int width = pipeWidth;
+        int height = pipeHeight;
+        Image img;
+        boolean passed = false; // to check if flappy bird has passed the pipe yet
+
+        // whenever we make a pipe object we need to pass in an image since we have two
+        // pipes top and bottom
+
+        Pipe(Image img) {
+            this.img = img;
+        }
+    }
+
     // game logic
     Bird bird;
+    int velocityX = -4; // rate at which the pipe moves to the left, this simulates the bird moving to
+                        // the right
     int velocityY = 0;
     int gravity = 1;// every frame bird will slow down by one pixel
 
+    ArrayList<Pipe> pipes;// since we have many pipes in this game we store them in array list
+
     Timer gameLoop;
+    Timer placePipesTimer;
 
     FlappyBird() {
         setPreferredSize(new Dimension(boardWidth, boardHeight));
         // setBackground(Color.blue);
 
         setFocusable(true); // make sure FlappyBird class takes in our key events
-        addKeyListener(this);//checks the 3 functions of keyListner
+        addKeyListener(this);// checks the 3 functions of keyListner
 
         // load images
         backgroundImg = new ImageIcon(getClass().getResource("./flappybirdbg.png")).getImage();
@@ -57,6 +84,17 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
 
         // bird
         bird = new Bird(birdImg);
+
+        pipes = new ArrayList<Pipe>(); // creates Arraylist of pipes
+
+        // place pipes timer
+        placePipesTimer = new Timer(1500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                placePipes(); // timer that will call placePipes every 1.5 seconds
+            }
+        });
+        placePipesTimer.start();
 
         // game timer
         gameLoop = new Timer(1000 / 60, this); // 1000.60 = 16.6ms every frame which is 60FPS
@@ -70,13 +108,26 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
         draw(g);
     }
 
+    public void placePipes() {
+        Pipe topPipe = new Pipe(topPipeImg);
+        pipes.add(topPipe);
+    }
+
     public void draw(Graphics g) {
-        System.out.println("draw");// debug statement
-        // background'
+        // System.out.println("draw");// debug statement
+
+        // background
         g.drawImage(backgroundImg, 0, 0, boardWidth, boardHeight, null);
 
         // bird
         g.drawImage(bird.img, bird.x, bird.y, bird.width, bird.height, null);
+
+        // pipes
+        for (int i = 0; i < pipes.size(); i++) {
+            Pipe pipe = pipes.get(i);
+            g.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height, null);
+        }
+
     }
 
     public void move() {// here all the x and y pos of our objects are updated
@@ -84,6 +135,12 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
         velocityY += gravity;// updates the velocity after takinbg gravity into account
         bird.y += velocityY;// updates bird pos by adding velocity to it
         bird.y = Math.max(bird.y, 0); // this caps the y pos at 0
+
+        //pipes
+        for (int i = 0; i < pipes.size(); i++) {
+            Pipe pipe=pipes.get(i);
+            pipe.x += velocityX; // everyframe move each pipe over by velocityX to the left
+        }
     }
 
     @Override
@@ -95,10 +152,10 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        //similar to keyTyped but it can be any key including f5
-        if(e.getKeyCode()==KeyEvent.VK_SPACE){
-            velocityY=-9;
-            //when space is pressed the velocityY is set to -9 every press
+        // similar to keyTyped but it can be any key including f5
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            velocityY = -9;
+            // when space is pressed the velocityY is set to -9 every press
         }
     }
 
