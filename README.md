@@ -28,7 +28,7 @@ public class App {
 }
 ```
 
-https://prod-files-secure.s3.us-west-2.amazonaws.com/b82f9a48-cfed-47d2-b9b0-9d52a734b8bd/0d917f57-fa5f-4f29-a342-854b4ab98b4b/Untitled.png
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/b82f9a48-cfed-47d2-b9b0-9d52a734b8bd/0d917f57-fa5f-4f29-a342-854b4ab98b4b/Untitled.png)
 
 Now , we need to add a JPanel which we will use as Canvas. With JPanel we will draw our game
 
