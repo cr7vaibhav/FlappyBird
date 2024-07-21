@@ -78,6 +78,7 @@ public class FlappyBird extends JPanel implements ActionListener {
     public void move() {// here all the x and y pos of our objects are updated
         // bird
         bird.y += velocityY;// updates bird pos by adding velocity to it
+        bird.y= Math.max(bird.y,0); //this caps the y pos at 0
     }
 
     @Override
