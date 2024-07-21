@@ -4,7 +4,7 @@ import java.util.ArrayList;//storing all pipes in the game
 import java.util.Random;//placing pipes at random locations
 import javax.swing.*;
 
-public class FlappyBird extends JPanel implements ActionListener {
+public class FlappyBird extends JPanel implements ActionListener,KeyListener {
     int boardWidth = 360;
     int boardHeight = 640;
 
@@ -35,7 +35,8 @@ public class FlappyBird extends JPanel implements ActionListener {
 
     // game logic
     Bird bird;
-    int velocityY = -6;
+    int velocityY = -9;
+    int gravity = 1;// every frame bird will slow down by one pixel
 
     Timer gameLoop;
 
@@ -77,8 +78,9 @@ public class FlappyBird extends JPanel implements ActionListener {
 
     public void move() {// here all the x and y pos of our objects are updated
         // bird
+        velocityY += gravity;//updates the velocity after takinbg gravity into account
         bird.y += velocityY;// updates bird pos by adding velocity to it
-        bird.y= Math.max(bird.y,0); //this caps the y pos at 0
+        bird.y = Math.max(bird.y, 0); // this caps the y pos at 0
     }
 
     @Override
@@ -86,6 +88,24 @@ public class FlappyBird extends JPanel implements ActionListener {
         // this will be the actionPerformed every 60 times a second
         move();// before we repaint the screen we call the move()
         repaint();// this will call the paint component
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'keyPressed'");
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
     }
 
 }
