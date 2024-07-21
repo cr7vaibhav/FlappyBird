@@ -55,7 +55,7 @@ public class FlappyBird extends JPanel implements ActionListener {
 
         // game timer
         gameLoop = new Timer(1000 / 60, this); // 1000.60 = 16.6ms every frame which is 60FPS
-        gameLoop.start();
+        gameLoop.start();//starts the timer
     }
 
     public void paintComponent(Graphics g) {
@@ -66,6 +66,7 @@ public class FlappyBird extends JPanel implements ActionListener {
     }
 
     public void draw(Graphics g) {
+        System.out.println("draw");//debug statement
         // background'
         g.drawImage(backgroundImg, 0, 0, boardWidth, boardHeight, null);
 
@@ -76,7 +77,7 @@ public class FlappyBird extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // this will be the actionPerformed every 60 times a second
-        repaint();//this will call the paint component
+        repaint();// this will call the paint component
     }
 
 }
