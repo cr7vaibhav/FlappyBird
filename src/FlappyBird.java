@@ -35,6 +35,7 @@ public class FlappyBird extends JPanel implements ActionListener {
 
     // game logic
     Bird bird;
+    int velocityY = -6;
 
     Timer gameLoop;
 
@@ -55,7 +56,7 @@ public class FlappyBird extends JPanel implements ActionListener {
 
         // game timer
         gameLoop = new Timer(1000 / 60, this); // 1000.60 = 16.6ms every frame which is 60FPS
-        gameLoop.start();//starts the timer
+        gameLoop.start();// starts the timer
     }
 
     public void paintComponent(Graphics g) {
@@ -66,7 +67,7 @@ public class FlappyBird extends JPanel implements ActionListener {
     }
 
     public void draw(Graphics g) {
-        System.out.println("draw");//debug statement
+        System.out.println("draw");// debug statement
         // background'
         g.drawImage(backgroundImg, 0, 0, boardWidth, boardHeight, null);
 
@@ -74,9 +75,15 @@ public class FlappyBird extends JPanel implements ActionListener {
         g.drawImage(bird.img, bird.x, bird.y, bird.width, bird.height, null);
     }
 
+    public void move() {// here all the x and y pos of our objects are updated
+        // bird
+        bird.y += velocityY;// updates bird pos by adding velocity to it
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         // this will be the actionPerformed every 60 times a second
+        move();// before we repaint the screen we call the move()
         repaint();// this will call the paint component
     }
 
