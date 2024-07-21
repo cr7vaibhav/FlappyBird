@@ -136,9 +136,9 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
         bird.y += velocityY;// updates bird pos by adding velocity to it
         bird.y = Math.max(bird.y, 0); // this caps the y pos at 0
 
-        //pipes
+        // pipes
         for (int i = 0; i < pipes.size(); i++) {
-            Pipe pipe=pipes.get(i);
+            Pipe pipe = pipes.get(i);
             pipe.x += velocityX; // everyframe move each pipe over by velocityX to the left
         }
     }
