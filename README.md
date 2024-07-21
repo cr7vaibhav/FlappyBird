@@ -1,4 +1,4 @@
-###Flappy Bird
+# Flappy Bird
 
 Using this FlappyBird project made by ImKennyYip to learn Java Swing 
 
