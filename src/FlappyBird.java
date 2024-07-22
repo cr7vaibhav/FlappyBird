@@ -67,6 +67,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
 
     Timer gameLoop;
     Timer placePipesTimer;
+    boolean gameOver = false; // false by default true if Bird falls out or collides with one of the pipes
 
     FlappyBird() {
         setPreferredSize(new Dimension(boardWidth, boardHeight));
@@ -158,6 +159,10 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
             Pipe pipe = pipes.get(i);
             pipe.x += velocityX; // everyframe move each pipe over by velocityX to the left
         }
+
+        if(bird.y>boardHeight){
+            gameOver=true;
+        }
     }
 
     @Override
@@ -165,6 +170,10 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
         // this will be the actionPerformed every 60 times a second
         move();// before we repaint the screen we call the move()
         repaint();// this will call the paint component
+        if(gameOver){
+            placePipesTimer.stop();//this will stop adding pipes
+            gameLoop.stop();//this will stop repainting and updating frames
+        }
     }
 
     @Override
