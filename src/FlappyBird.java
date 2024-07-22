@@ -113,11 +113,21 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
         // Math.random() give a value (0-1_ which is * by pipeHeight/2 -> (0-256)
         // pipeHeight/4 -> 128 and pipeY is 0
         // 0-128-(0-256) --> range is --> (pipeHeight/4 - 3/4 pipeHeight)
-        int randomPipeY = (int) (pipeY - pipeHeight / 4 - Math.random() * (pipeHeight / 2));
         // this genarates random height pipes
+        int randomPipeY = (int) (pipeY - pipeHeight / 4 - Math.random() * (pipeHeight / 2));
+        int openingSpace = boardHeight / 4; // openiing Space will be 128 pixels
+
         Pipe topPipe = new Pipe(topPipeImg);
-        topPipe.y=randomPipeY;
+        topPipe.y = randomPipeY;
         pipes.add(topPipe);
+
+        Pipe bottomPipe = new Pipe(bottomPipeImg);
+        bottomPipe.y = topPipe.y + pipeHeight + openingSpace;
+        // we need to set the y pos since the default is 0 we need to shift it downwards
+        // so we get the topPipe.y top pos + heightofToppipe + opening space so that we
+        // can get the pos where bottom pipe starts the bottomPipe.y
+        pipes.add(bottomPipe);
+
     }
 
     public void draw(Graphics g) {
