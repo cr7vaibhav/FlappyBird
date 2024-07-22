@@ -68,6 +68,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
     Timer gameLoop;
     Timer placePipesTimer;
     boolean gameOver = false; // false by default true if Bird falls out or collides with one of the pipes
+    double score = 0; // to keep track of score
 
     FlappyBird() {
         setPreferredSize(new Dimension(boardWidth, boardHeight));
@@ -146,6 +147,14 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
             g.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height, null);
         }
 
+        g.setColor(Color.white);
+        g.setFont(new Font("Arial", Font.PLAIN, 32));
+        if (gameOver) {
+            g.drawString("Game Over: " + String.valueOf((int) score), 10, 35);
+        } else {
+            g.drawString(String.valueOf((int) score), 10, 35);
+        }
+
     }
 
     public void move() {// here all the x and y pos of our objects are updated
@@ -159,8 +168,14 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
             Pipe pipe = pipes.get(i);
             pipe.x += velocityX; // everyframe move each pipe over by velocityX to the left
 
-            if(collision(bird, pipe)){
-                gameOver=true;
+            if (!pipe.passed && bird.x > pipe.x + pipe.width) {// we check if the bird has passed the pipe and the x pos
+                                                               // of bird is past the right side of this pipe
+                pipe.passed = true;
+                score += 0.5; // 0.5 beacuse we have 2 pipes! so 0.5*2 =1, 1 for each set of pipes
+            }
+
+            if (collision(bird, pipe)) {
+                gameOver = true;
             }
         }
 
